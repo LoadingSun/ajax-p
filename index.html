@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <style>
+        *{padding: 0px;margin: 0px}
+        body{
+            position:relative;
+            background: #FFFFFF);
+        }
+        #b1{
+            width: 1760px;
+            height:1330px;
+            //border: 1px solid black;
+            margin: 100px auto;
+        }
+        #b1 ul li{
+            width: 330px;
+            height: 200px;
+            //border: 1px solid black;
+            padding: 10px;
+            list-style: none;
+            float: left;
+        }
+        #b1 ul li img{
+            width: 330px;
+            height: 200px;
+            border: 5px solid white;
+            box-shadow: 3px 2px 16px #000;
+        }
+        .b2{
+            width: 1280px;
+            height: 720px;
+            background:#666;
+            position: fixed;
+            top:250px;
+            left:50%;
+            margin-left:-600px;
+            display: none;
+        }
+        .b2 img.bigimg{
+            width: 100%;
+            height: 100%;
+            border: 5px solid #708090;
+            box-shadow: 6px 10px 80px #0000CD;
+        }
+        .b2 img.left{
+            position: absolute;
+            top:50%;
+            margin-top:-17.5px;
+            left:-60px;
+        }
+        .b2 img.right {
+            position: absolute;
+            top: 50%;
+            margin-top: -17.5px;
+            right: -60px;
+        }
+        .gray{
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            top:0;
+            left:0;
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+<div id="b1">
+    <ul id="b3">
+
+    </ul>
+</div>
+<div class="gray"></div>
+<div class="b2">
+    <img src="1.jpg" class="bigimg"/>
+    <img src="left.png" class="left"/>
+    <img src="right.png" class="right"/>
+</div>
+<script>
+    var oList = document.getElementById('b3');
+    var oli=oList.getElementsByTagName('li');
+    alert(oli.length)
+    setInterval(auto , 2000);
+
+    function auto(){
+        var xhr = new XMLHttpRequest();
+        xhr.open( 'get' , 't2.php' , true );
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if ( xhr.readyState == 4 )
+            {
+                if ( xhr.status >= 200 && xhr.status < 300 )
+                {
+
+                    var respone = eval( '(' + xhr.responseText + ')' );
+
+                    oList.innerHTML = '';
+                    for (var i=0;i<respone.length;i++ )
+                    {
+                        var s = '<li><img src=' + '"'+respone[i].pic +'"'+'/>' + '</li>';
+                        oList.innerHTML += s
+                    }
+
+
+                }else
+                {
+                    alert( '请求好像遇到了点问题，状态码：' + xhr.status );
+                };
+            }
+        };
+    };
+</script>
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+
+//    var _index=0
+//    var dImgsrc=''
+//    $(function () {
+//        $("#b3 li").click(function () {
+//            $(".b2").show()
+//            $(".gray").show()
+//            _index=$(this).index();
+//            dImgsrc=$(this).find("img").attr("src");
+//            //alert(dImgsrc);
+//            $(".b2 .bigimg").attr("src",dImgsrc)
+//        })
+//        var count = $('#b1').find("img").length;
+//        //alert(count);
+//        $(".b2 .left").click(function(){
+//            //点击按钮我要切换图片  实际切换地址
+//            _index--;//_index = _index-1  点一次在它之前减1次
+//            if(_index<0){_index=count-'1'} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
+//            dImgsrc = $("#b3 li").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
+//            //alert(dImgsrc)
+//            // src的地址 赋给展示区
+//            $(".b2 .bigimg").attr("src",dImgsrc);
+//        })
+//        $(".b2 .right").click(function(){
+//            //点击按钮我要切换图片  实际切换地址
+//            _index++;//_index = _index+1  点一次在它之前加1次
+//            if(_index>count-'1'){_index=0} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
+//            dImgsrc = $("#b3 li").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
+//
+//            // src的地址 赋给展示区
+//            $(".b2 .bigimg").attr("src",dImgsrc);
+//        });
+//        $(".gray").click(function(){
+//            $(this).hide();//点击页面区域 让阴影图层隐藏
+//            $(".b2").hide();
+//        })
+//    })
+</script>
+</body>
+</html>

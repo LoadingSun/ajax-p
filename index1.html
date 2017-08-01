@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>ajax</title>
+    <meta charset="utf-8">
+    <style type='text/css'>
+        *{ margin:0; padding:0;}
+
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+    <ul id='list'>
+
+    </ul>
+</div>
+
+<button id='btn'>按钮</button>
+
+<div><img style="width:400px; height:300px;" src="2.jpg" alt="" /></div>
+<script type="text/javascript">
+
+    alert( '刷新页面了！' );
+
+    var oList = document.getElementById('list');
+    var oBtn = document.getElementById('btn');
+
+    oBtn.onclick=function () {
+
+    }
+    setInterval(auto , 2000);
+
+    function auto(){
+        var xhr = new XMLHttpRequest();
+        xhr.open( 'get' , 'test.php' , true );
+        xhr.send();
+        xhr.onreadystatechange = function(){
+            if ( xhr.readyState == 4 )
+            {
+                if ( xhr.status >= 200 && xhr.status < 300 )
+                {
+
+                    var respone = eval( '(' + xhr.responseText + ')' );
+
+                    oList.innerHTML = '';
+                    for (var i=0;i<respone.length;i++ )
+                    {
+                        var s = '<li>' +respone[i].name + '，年龄：' + respone[i].age + '</li>';
+                        oList.innerHTML += s;
+                    }
+
+
+                }else
+                {
+                    alert( '请求好像遇到了点问题，状态码：' + xhr.status );
+                };
+            }
+        };
+    };
+
+</script>
+</body>
+</html>
