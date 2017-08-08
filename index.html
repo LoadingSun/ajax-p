@@ -3,6 +3,7 @@
 <head>
     <title>Title</title>
     <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
         *{padding: 0px;margin: 0px}
         body{
@@ -67,9 +68,25 @@
             display: none;
         }
     </style>
-
+    <script type="text/javascript" defer="defer">
+    </script>
 </head>
 <body>
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" class="btn btn-default">1</button>
+    <button type="button" class="btn btn-default">2</button>
+
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            选项
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li id="btn1"><a href="#">刷新</a></li>
+            <li><a href="#">Dropdown link</a></li>
+        </ul>
+    </div>
+</div>
 <div id="b1">
     <ul id="b3">
 
@@ -77,16 +94,20 @@
 </div>
 <div class="gray"></div>
 <div class="b2">
-    <img src="1.jpg" class="bigimg"/>
-    <img src="left.png" class="left"/>
-    <img src="right.png" class="right"/>
+    <img src="images/1.jpg" class="bigimg"/>
+    <img src="images/left.png" class="left"/>
+    <img src="images/right.png" class="right"/>
 </div>
+
 <script>
     var oList = document.getElementById('b3');
-    var oli=oList.getElementsByTagName('li');
-    alert(oli.length)
-    setInterval(auto , 2000);
+    var btn=document.getElementById('btn');
+    var btn1=document.getElementById('btn1');
+    btn1.onclick=function () {
+        auto()
+    }
 
+    auto()
     function auto(){
         var xhr = new XMLHttpRequest();
         xhr.open( 'get' , 't2.php' , true );
@@ -102,58 +123,67 @@
                     oList.innerHTML = '';
                     for (var i=0;i<respone.length;i++ )
                     {
-                        var s = '<li><img src=' + '"'+respone[i].pic +'"'+'/>' + '</li>';
+                        var s = '<li class="cc"><img src=' + '"'+'images/'+respone[i].pic +'"'+'/>' + '</li>';
                         oList.innerHTML += s
                     }
 
-
                 }else
                 {
-                    alert( '请求好像遇到了点问题，状态码：' + xhr.status );
+                    alert( '请求遇到问题，状态码：' + xhr.status );
                 };
             }
         };
     };
 </script>
 <script src="jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script>
+    var _index=0
+    var dImgsrc=''
 
-//    var _index=0
-//    var dImgsrc=''
-//    $(function () {
-//        $("#b3 li").click(function () {
-//            $(".b2").show()
-//            $(".gray").show()
-//            _index=$(this).index();
-//            dImgsrc=$(this).find("img").attr("src");
-//            //alert(dImgsrc);
-//            $(".b2 .bigimg").attr("src",dImgsrc)
-//        })
-//        var count = $('#b1').find("img").length;
-//        //alert(count);
-//        $(".b2 .left").click(function(){
-//            //点击按钮我要切换图片  实际切换地址
-//            _index--;//_index = _index-1  点一次在它之前减1次
-//            if(_index<0){_index=count-'1'} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
-//            dImgsrc = $("#b3 li").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
-//            //alert(dImgsrc)
-//            // src的地址 赋给展示区
-//            $(".b2 .bigimg").attr("src",dImgsrc);
-//        })
-//        $(".b2 .right").click(function(){
-//            //点击按钮我要切换图片  实际切换地址
-//            _index++;//_index = _index+1  点一次在它之前加1次
-//            if(_index>count-'1'){_index=0} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
-//            dImgsrc = $("#b3 li").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
-//
-//            // src的地址 赋给展示区
-//            $(".b2 .bigimg").attr("src",dImgsrc);
-//        });
-//        $(".gray").click(function(){
-//            $(this).hide();//点击页面区域 让阴影图层隐藏
-//            $(".b2").hide();
-//        })
-//    })
+    $(function () {
+        $('#b3').delegate("li",'click',function () {
+                $(".b2").show()
+                $(".gray").show()
+                _index=$(this).index();
+                dImgsrc=$(this).find("img").attr("src");
+                //alert(dImgsrc);
+                $(".b2 .bigimg").attr("src",dImgsrc)
+
+        })
+        $(".cc").click(function () {
+            $(".b2").show()
+            $(".gray").show()
+            _index=$(this).index();
+            dImgsrc=$(this).find("img").attr("src");
+            //alert(dImgsrc);
+            $(".b2 .bigimg").attr("src",dImgsrc)
+        })
+        var count = $('#b1').find("img").length;
+        //alert(count);
+        $(".b2 .left").click(function(){
+            //点击按钮我要切换图片  实际切换地址
+            _index--;//_index = _index-1  点一次在它之前减1次
+            if(_index<0){_index=count-'1'} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
+            dImgsrc = $(".cc").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
+            //alert(dImgsrc)
+            // src的地址 赋给展示区
+            $(".b2 .bigimg").attr("src",dImgsrc);
+        })
+        $(".b2 .right").click(function(){
+            //点击按钮我要切换图片  实际切换地址
+            _index++;//_index = _index+1  点一次在它之前加1次
+            if(_index>count-'1'){_index=0} //if 当_index 点击的值 小于0 我就让它_index = 8 重新来切换
+            dImgsrc = $(".cc").eq(_index).find("img").attr("src");//我现在点击第几个是根据我的_index来决定的 eq()筛选第几个li find匹配 attr 返回的地址
+
+            // src的地址 赋给展示区
+            $(".b2 .bigimg").attr("src",dImgsrc);
+        });
+        $(".gray").click(function(){
+            $(this).hide();//点击页面区域 让阴影图层隐藏
+            $(".b2").hide();
+        })
+    })
 </script>
 </body>
 </html>
